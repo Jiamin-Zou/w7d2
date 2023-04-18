@@ -10,6 +10,31 @@
   </head>
 
   <body>
+    <nav>
+    Welcome To the Music App !
+      <% if logged_in? %>        
+        <div class='log_in_status'>
+          <form action="<%=session_url%>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <%= auth_token %>
+            <input type="submit", value="Sign Out">
+          </form>
+        </div>
+      <% else %>
+        <div class='log_in_status'>
+          <a href="<%=new_user_url%>" class="sign">Sign Up</a>
+          <a href="<%=new_session_url%>" class="sign">Log In</a>
+        </div>
+      <% end %>
+    </nav>
     <%= yield %>
+
+    <% if flash[:errors] %>
+      <ul>
+        <% flash[:errors].each do |error| %>
+          <li><%=error%></li>
+        <% end %>
+      </ul>
+    <% end %>
   </body>
 </html>
